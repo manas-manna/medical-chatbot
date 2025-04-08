@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/expenses")
@@ -23,5 +24,12 @@ public class ExpenseController {
     @GetMapping("/{userEmail}")
     public ResponseEntity<List<Expense>> getUserExpenses(@PathVariable String userEmail) {
         return ResponseEntity.ok(expenseService.getUserExpenses(userEmail));
+    }
+
+    @GetMapping("/{email}/summary")
+    public ResponseEntity<Map<String, Double>> getExpenseSummary(
+            @PathVariable String email,
+            @RequestParam String range) {
+        return ResponseEntity.ok(expenseService.getExpenseSummary(email, range));
     }
 }
