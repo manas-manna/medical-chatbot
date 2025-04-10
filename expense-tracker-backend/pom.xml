@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.smart-finance</groupId>
-	<artifactId>expense-tracker</artifactId>
+	<artifactId>expense-tracker-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>expense-tracker</name>
 	<description>expense-tracker</description>
@@ -84,7 +84,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
