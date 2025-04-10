@@ -27,7 +27,7 @@ public class Expense {
 
     private String category;
 
-    private BigDecimal amount;
+    private Long amount;
 
     private LocalDateTime timestamp;
 
@@ -35,5 +35,7 @@ public class Expense {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(name = "is_fraud")
+    private Boolean fraud = false;
 
 }

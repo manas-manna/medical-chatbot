@@ -4,10 +4,13 @@ import AddExpenseForm from "../components/AddExpenseForm";
 import TimeFilter from "../components/TimeFilter";
 import CategoryPieChart from "../components/CategoryPieChart";
 import ExpenseSummary from "../components/ExpenseSummary";
+import ExpenseHistory from "../components/ExpenseHistory";
 
 const HomePage = () => {
   const [range, setRange] = useState("7d");
   const [summary, setSummary] = useState({});
+  const [expenses, setExpenses] = useState([]);
+  const [view, setView] = useState("summary"); // 'summary' or 'history'
 
   const fetchSummary = async () => {
     const res = await axios.get(
@@ -16,8 +19,22 @@ const HomePage = () => {
     setSummary(res.data);
   };
 
+  const fetchExpenses = async () => {
+    const res = await axios.get(`http://localhost:8080/api/expenses/manas@gmail.com`);
+    const sorted = res.data.sort(
+      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+    );
+    setExpenses(sorted);
+  };
+
+  const refreshAll = async () => {
+    await fetchSummary();
+    await fetchExpenses();
+  };
+
   useEffect(() => {
     fetchSummary();
+    fetchExpenses();
   }, [range]);
 
   return (
@@ -27,12 +44,42 @@ const HomePage = () => {
           💸 Expense Tracker Dashboard
         </h1>
 
-        <AddExpenseForm onExpenseAdded={fetchSummary} />
-        <TimeFilter selectedRange={range} onRangeChange={setRange} />
-        <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
-          <CategoryPieChart data={summary} />
-          <ExpenseSummary data={summary} />
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => setView("summary")}
+            className={`px-4 py-2 rounded ${
+              view === "summary"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-300 text-black"
+            }`}
+          >
+            Summary
+          </button>
+          <button
+            onClick={() => setView("history")}
+            className={`px-4 py-2 rounded ${
+              view === "history"
+                ? "bg-green-600 text-white"
+                : "bg-gray-300 text-black"
+            }`}
+          >
+            History
+          </button>
         </div>
+
+        <AddExpenseForm onExpenseAdded={refreshAll} />
+
+        {view === "summary" ? (
+          <>
+            <TimeFilter selectedRange={range} onRangeChange={setRange} />
+            <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
+              <CategoryPieChart data={summary} />
+              <ExpenseSummary data={summary} />
+            </div>
+          </>
+        ) : (
+          <ExpenseHistory expenses={expenses} />
+        )}
       </div>
     </div>
   );
