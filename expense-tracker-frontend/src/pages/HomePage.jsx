@@ -14,13 +14,13 @@ const HomePage = () => {
 
   const fetchSummary = async () => {
     const res = await axios.get(
-      `http://localhost:8080/api/expenses/manas@gmail.com/summary?range=${range}`
+      `http://localhost:9000/api/expenses/manas@gmail.com/summary?range=${range}`
     );
     setSummary(res.data);
   };
 
   const fetchExpenses = async () => {
-    const res = await axios.get(`http://localhost:8080/api/expenses/manas@gmail.com`);
+    const res = await axios.get(`http://localhost:9000/api/expenses/manas@gmail.com`);
     const sorted = res.data.sort(
       (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
     );

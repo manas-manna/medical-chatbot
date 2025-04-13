@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: expense_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  vault:
+    image: vault:1.14
+    container_name: vault
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root
+      VAULT_ADDR: http://0.0.0.0:8200
+    volumes:
+      - vault-data:/vault/data
+      - ./vault-init.sh:/vault-init.sh
+    entrypoint: sh -c "vault server -dev & sleep 3 && sh /vault-init.sh"
+
+  expense_tracker_backend:
+    container_name: expense_tracker_backend
+    build:
+      context: ./expense-tracker-backend
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres
+      - fraud_detection_service
+      - vault
+    environment:
+      SPRING_CLOUD_VAULT_TOKEN: root
+      SPRING_CLOUD_VAULT_URI: http://vault:8200
+      SPRING_PROFILES_ACTIVE: vault
+
+  expense_tracker_frontend:
+    container_name: expense_tracker_frontend
+    build:
+      context: ./expense-tracker-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - expense_tracker_backend
+
+  fraud_detection_service:
+    container_name: fraud_detection_service
+    build:
+      context: ./fraud-detection-service
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
+  vault-data:
+

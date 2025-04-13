@@ -16,7 +16,7 @@ const AddExpenseForm = ({ onExpenseAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/expenses/manas@gmail.com', {
+      await axios.post('http://localhost:9000/api/expenses/manas@gmail.com', {
         ...formData
       });
       toast.success("Expense added!");

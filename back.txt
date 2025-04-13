@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: expense_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  expense_tracker_backend:
+    container_name: expense_tracker_backend
+    build:
+      context: ./expense-tracker-backend
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres
+      - fraud_detection_service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expense_tracker
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+  expense_tracker_frontend:
+    container_name: expense_tracker_frontend
+    build:
+      context: ./expense-tracker-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - expense_tracker_backend
+
+  fraud_detection_service:
+    container_name: fraud_detection_service
+    build:
+      context: ./fraud-detection-service
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
+
