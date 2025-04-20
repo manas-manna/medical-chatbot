@@ -13,7 +13,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   vault:
-    image: vault:1.14
+    image: hashicorp/vault:1.14.3
     container_name: vault
     ports:
       - "8200:8200"
@@ -25,7 +25,7 @@ services:
     volumes:
       - vault-data:/vault/data
       - ./vault-init.sh:/vault-init.sh
-    entrypoint: sh -c "vault server -dev & sleep 3 && sh /vault-init.sh"
+    entrypoint: sh -c "vault server -dev & sleep 5 && sh /vault-init.sh && wait $(pgrep -f 'vault server')"
 
   expense_tracker_backend:
     container_name: expense_tracker_backend
@@ -41,6 +41,8 @@ services:
       SPRING_CLOUD_VAULT_TOKEN: root
       SPRING_CLOUD_VAULT_URI: http://vault:8200
       SPRING_PROFILES_ACTIVE: vault
+    volumes:
+      - ./backend-logs:/logs
 
   expense_tracker_frontend:
     container_name: expense_tracker_frontend
@@ -58,7 +60,50 @@ services:
     ports:
       - "8000:8000"
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.6.0
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5044:5044"
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.6.0
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      
+   filebeat:
+    image: docker.elastic.co/beats/filebeat:8.6.0
+    container_name: filebeat
+    depends_on:
+      - logstash
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./backend-logs:/logs:ro
+    user: root
+    command: ["--strict.perms=false"]
+
 volumes:
   pgdata:
   vault-data:
+  esdata:
 

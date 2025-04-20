@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -18,6 +20,8 @@ import java.util.Map;
 
 @Service
 public class ExpenseService {
+
+    private static final Logger log = LoggerFactory.getLogger(ExpenseService.class);
 
     @Autowired
     private ExpenseRepository expenseRepository;
@@ -28,12 +32,19 @@ public class ExpenseService {
     @Autowired
     private RestTemplate restTemplate;
 
+
     public Expense addExpense(Expense expense, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> {
+                    log.error("User not found with email {}", userEmail);
+                    return new RuntimeException("User not found");
+                });
 
         expense.setUser(user);
         expense.setTimestamp(LocalDateTime.now());
+
+        log.info("Creating new expense: amount={}, category={}, user={}",
+                expense.getAmount(), expense.getCategory(), userEmail);
 
         //  Prepare data for fraud detection
         FraudRequest request = new FraudRequest();
@@ -50,22 +61,38 @@ public class ExpenseService {
             ResponseEntity<FraudResponse> response = restTemplate.postForEntity(url, request, FraudResponse.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
-                expense.setFraud(response.getBody().isFraud());
+                boolean isFraud = response.getBody().isFraud();
+                expense.setFraud(isFraud);
+
+                if (isFraud) {
+                    log.warn("Fraudulent expense detected: user={}, amount={}, category={}",
+                            userEmail, expense.getAmount(), expense.getCategory());
+                } else {
+                    log.info("Expense passed fraud check: user={}, amount={}, category={}",
+                            userEmail, expense.getAmount(), expense.getCategory());
+                }
             } else {
-                expense.setFraud(false); // Fallback
+                log.error("Fraud service failed for user {}. Response: {}", userEmail, response.getStatusCode());
+                expense.setFraud(false); // fallback
             }
         } catch (Exception e) {
-            System.out.println("Error calling fraud detection service: " + e.getMessage());
-            expense.setFraud(false); // Fallback in case of error
+            log.error("Error calling fraud detection service for user {}: {}", userEmail, e.getMessage(), e);
+            expense.setFraud(false); // fallback in case of error
         }
 
-
+        Expense savedExpense = expenseRepository.save(expense);
+        log.info("Expense saved successfully: id={}, user={}", savedExpense.getId(), userEmail);
         return expenseRepository.save(expense);
     }
 
     public List<Expense> getUserExpenses(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> {
+                    log.error("User not found with email {}", userEmail);
+                    return new RuntimeException("User not found");
+                });
+
+        log.info("Fetching expenses for user {}", userEmail);
         return expenseRepository.findByUser(user);
     }
 
@@ -83,8 +110,11 @@ public class ExpenseService {
                 startDate = now.minusDays(30);
                 break;
             default:
+                log.warn("Invalid range provided: {}", range);
                 throw new IllegalArgumentException("Invalid range: " + range);
         }
+
+        log.info("Generating summary for user {} with range {}", email, range);
 
         List<Expense> expenses = expenseRepository.findByUserEmailAndDateAfter(email, startDate);
 
@@ -96,6 +126,7 @@ public class ExpenseService {
                     summary.getOrDefault(category, 0.0) + amount);
         }
 
+        log.info("Expense summary generated for user {}: {}", email, summary);
         return summary;
     }
 
