@@ -27,36 +27,36 @@ services:
       - ./vault-init.sh:/vault-init.sh
     entrypoint: sh -c "vault server -dev & sleep 5 && sh /vault-init.sh && wait $(pgrep -f 'vault server')"
 
-  expense_tracker_backend:
-    container_name: expense_tracker_backend
+  backend:
+    container_name: backend
     build:
-      context: ./expense-tracker-backend
+      context: ./backend
     ports:
       - "9000:9000"
     depends_on:
       - postgres
-      - fraud_detection_service
+      - fraud_detection
       - vault
     environment:
       SPRING_CLOUD_VAULT_TOKEN: root
       SPRING_CLOUD_VAULT_URI: http://vault:8200
       SPRING_PROFILES_ACTIVE: vault
     volumes:
-      - ./backend-logs:/logs
+      - ./logs:/logs
 
-  expense_tracker_frontend:
-    container_name: expense_tracker_frontend
+  frontend:
+    container_name: frontend
     build:
-      context: ./expense-tracker-frontend
+      context: ./frontend
     ports:
       - "3000:80"
     depends_on:
-      - expense_tracker_backend
+      - backend
 
-  fraud_detection_service:
-    container_name: fraud_detection_service
+  fraud_detection:
+    container_name: fraud_detection
     build:
-      context: ./fraud-detection-service
+      context: ./fraud-detection
     ports:
       - "8000:8000"
 
@@ -91,16 +91,16 @@ services:
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
       
-   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.6.0
-    container_name: filebeat
-    depends_on:
-      - logstash
-    volumes:
-      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./backend-logs:/logs:ro
-    user: root
-    command: ["--strict.perms=false"]
+  filebeat:
+   image: docker.elastic.co/beats/filebeat:8.6.0
+   container_name: filebeat
+   depends_on:
+     - logstash
+   volumes:
+     - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+     - ./backend-logs:/logs:ro
+   user: root
+   command: ["--strict.perms=false"]
 
 volumes:
   pgdata:

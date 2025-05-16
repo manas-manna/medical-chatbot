@@ -1,0 +1,258 @@
+2025-04-22T09:02:59.217Z ERROR 1 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:347)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.smartfinance.expensetracker.ExpenseTrackerApplication.main(ExpenseTrackerApplication.java:15)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reportConfigurationErrorsIfNecessary(LogbackLoggingSystem.java:291)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:269)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:81)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:61)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:197)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:332)
+	... 26 common frames omitted
+
+2025-04-22T09:16:30.560Z ERROR 1 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:347)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.smartfinance.expensetracker.ExpenseTrackerApplication.main(ExpenseTrackerApplication.java:15)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reportConfigurationErrorsIfNecessary(LogbackLoggingSystem.java:291)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:269)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:81)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:61)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:197)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:332)
+	... 26 common frames omitted
+
+2025-04-22T09:17:01.638Z ERROR 1 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[CUSTOM_FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[CUSTOM_FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[CUSTOM_FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:347)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.smartfinance.expensetracker.ExpenseTrackerApplication.main(ExpenseTrackerApplication.java:15)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[CUSTOM_FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[CUSTOM_FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[CUSTOM_FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reportConfigurationErrorsIfNecessary(LogbackLoggingSystem.java:291)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:269)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:81)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:61)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:197)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:332)
+	... 26 common frames omitted
+
+2025-04-22T10:13:54.482Z ERROR 1 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:347)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.smartfinance.expensetracker.ExpenseTrackerApplication.main(ExpenseTrackerApplication.java:15)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.FileAppender[FILE] - 'File' option has the same value "/logs/app.log" as that given for appender [FILE] defined earlier.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - Collisions detected with FileAppender/RollingAppender instances defined earlier. Aborting.
+ERROR in ch.qos.logback.core.FileAppender[FILE] - For more information, please visit https://logback.qos.ch/codes.html#earlier_fa_collision
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reportConfigurationErrorsIfNecessary(LogbackLoggingSystem.java:291)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:269)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:81)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:61)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:197)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:332)
+	... 26 common frames omitted
+
+{"@timestamp":"2025-04-22T10:18:18.037944603Z","@version":"1","message":"HV000001: Hibernate Validator 8.0.2.Final","logger_name":"org.hibernate.validator.internal.util.Version","thread_name":"background-preinit","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:18.282516427Z","@version":"1","message":"Starting ExpenseTrackerApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/app.jar started by root in /app)","logger_name":"com.smartfinance.expensetracker.ExpenseTrackerApplication","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:18.284358751Z","@version":"1","message":"The following 1 profile is active: \"vault\"","logger_name":"com.smartfinance.expensetracker.ExpenseTrackerApplication","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:19.242436557Z","@version":"1","message":"Bootstrapping Spring Data JPA repositories in DEFAULT mode.","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:19.336071927Z","@version":"1","message":"Finished Spring Data repository scanning in 82 ms. Found 2 JPA repository interfaces.","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:19.711905933Z","@version":"1","message":"BeanFactory id=2d8f92e8-f115-3f49-b59b-36825cbd0cd0","logger_name":"org.springframework.cloud.context.scope.GenericScope","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.34271144Z","@version":"1","message":"Tomcat initialized with port 9000 (http)","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.367012514Z","@version":"1","message":"Initializing ProtocolHandler [\"http-nio-9000\"]","logger_name":"org.apache.coyote.http11.Http11NioProtocol","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.370696682Z","@version":"1","message":"Starting service [Tomcat]","logger_name":"org.apache.catalina.core.StandardService","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.371010941Z","@version":"1","message":"Starting Servlet engine: [Apache Tomcat/10.1.39]","logger_name":"org.apache.catalina.core.StandardEngine","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.432560448Z","@version":"1","message":"Initializing Spring embedded WebApplicationContext","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.434106988Z","@version":"1","message":"Root WebApplicationContext: initialization completed in 2056 ms","logger_name":"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.678062379Z","@version":"1","message":"HHH000204: Processing PersistenceUnitInfo [name: default]","logger_name":"org.hibernate.jpa.internal.util.LogHelper","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.775717042Z","@version":"1","message":"HHH000412: Hibernate ORM core version 6.6.11.Final","logger_name":"org.hibernate.Version","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:20.831123733Z","@version":"1","message":"HHH000026: Second-level cache disabled","logger_name":"org.hibernate.cache.internal.RegionFactoryInitiator","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:21.175652065Z","@version":"1","message":"No LoadTimeWeaver setup: ignoring JPA class transformer","logger_name":"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:21.222979323Z","@version":"1","message":"HikariPool-1 - Starting...","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:21.54351175Z","@version":"1","message":"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4345fd45","logger_name":"com.zaxxer.hikari.pool.HikariPool","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:21.545349071Z","@version":"1","message":"HikariPool-1 - Start completed.","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:21.587472327Z","@version":"1","message":"HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)","logger_name":"org.hibernate.orm.deprecation","thread_name":"main","level":"WARN","level_value":30000}
+{"@timestamp":"2025-04-22T10:18:21.625994164Z","@version":"1","message":"HHH10001005: Database info:\n\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\n\tDatabase driver: undefined/unknown\n\tDatabase version: 16.8\n\tAutocommit mode: undefined/unknown\n\tIsolation level: undefined/unknown\n\tMinimum pool size: undefined/unknown\n\tMaximum pool size: undefined/unknown","logger_name":"org.hibernate.orm.connections.pooling","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:22.666540383Z","@version":"1","message":"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)","logger_name":"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:22.857414303Z","@version":"1","message":"Initialized JPA EntityManagerFactory for persistence unit 'default'","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:23.318401773Z","@version":"1","message":"Hibernate is in classpath; If applicable, HQL parser will be used.","logger_name":"org.springframework.data.jpa.repository.query.QueryEnhancerFactory","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:23.977980268Z","@version":"1","message":"spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning","logger_name":"org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration","thread_name":"main","level":"WARN","level_value":30000}
+{"@timestamp":"2025-04-22T10:18:24.820181908Z","@version":"1","message":"Starting ProtocolHandler [\"http-nio-9000\"]","logger_name":"org.apache.coyote.http11.Http11NioProtocol","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:24.840761344Z","@version":"1","message":"Tomcat started on port 9000 (http) with context path '/'","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:18:24.857775701Z","@version":"1","message":"Started ExpenseTrackerApplication in 8.028 seconds (process running for 8.72)","logger_name":"com.smartfinance.expensetracker.ExpenseTrackerApplication","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:13.726294646Z","@version":"1","message":"Initializing Spring DispatcherServlet 'dispatcherServlet'","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","thread_name":"http-nio-9000-exec-1","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:13.726721436Z","@version":"1","message":"Initializing Servlet 'dispatcherServlet'","logger_name":"org.springframework.web.servlet.DispatcherServlet","thread_name":"http-nio-9000-exec-1","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:13.727870465Z","@version":"1","message":"Completed initialization in 1 ms","logger_name":"org.springframework.web.servlet.DispatcherServlet","thread_name":"http-nio-9000-exec-1","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:13.776079991Z","@version":"1","message":"Generating summary for user manas@gmail.com with range 7d","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-2","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:13.78960257Z","@version":"1","message":"Expense summary generated for user manas@gmail.com: {}","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-2","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:13.790157856Z","@version":"1","message":"Fetching expenses for user manas@gmail.com","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-1","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:28.09498386Z","@version":"1","message":"Creating new expense: amount=100, category=Food, user=manas@gmail.com","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-4","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:28.115908028Z","@version":"1","message":"Error calling fraud detection service for user manas@gmail.com: I/O error on POST request for \"http://localhost:8000/predict-fraud\": Connection refused","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-4","level":"ERROR","level_value":40000,"stack_trace":"org.springframework.web.client.ResourceAccessException: I/O error on POST request for \"http://localhost:8000/predict-fraud\": Connection refused\n\tat org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)\n\tat org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)\n\tat org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)\n\tat org.springframework.web.client.RestTemplate.postForEntity(RestTemplate.java:549)\n\tat com.smartfinance.expensetracker.service.ExpenseService.addExpense(ExpenseService.java:61)\n\tat com.smartfinance.expensetracker.controller.ExpenseController.addExpense(ExpenseController.java:21)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:568)\n\tat org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)\n\tat org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)\n\tat org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)\n\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)\n\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)\n\tat org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\n\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\n\tat java.base/java.lang.Thread.run(Thread.java:833)\nCaused by: java.net.ConnectException: Connection refused\n\tat java.base/sun.nio.ch.Net.connect0(Native Method)\n\tat java.base/sun.nio.ch.Net.connect(Net.java:579)\n\tat java.base/sun.nio.ch.Net.connect(Net.java:568)\n\tat java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:588)\n\tat java.base/java.net.Socket.connect(Socket.java:633)\n\tat java.base/java.net.Socket.connect(Socket.java:583)\n\tat java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:183)\n\tat java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:498)\n\tat java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:603)\n\tat java.base/sun.net.www.http.HttpClient.<init>(HttpClient.java:246)\n\tat java.base/sun.net.www.http.HttpClient.New(HttpClient.java:351)\n\tat java.base/sun.net.www.http.HttpClient.New(HttpClient.java:373)\n\tat java.base/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1309)\n\tat java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1242)\n\tat java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1128)\n\tat java.base/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1057)\n\tat org.springframework.http.client.SimpleClientHttpRequest.executeInternal(SimpleClientHttpRequest.java:79)\n\tat org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)\n\tat org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)\n\tat org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)\n\t... 54 common frames omitted\n"}
+{"@timestamp":"2025-04-22T10:19:28.146939738Z","@version":"1","message":"Expense saved successfully: id=5, user=manas@gmail.com","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-4","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:28.156786281Z","@version":"1","message":"Generating summary for user manas@gmail.com with range 7d","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-5","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:28.162465743Z","@version":"1","message":"Expense summary generated for user manas@gmail.com: {Food=100.0}","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-5","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:19:28.169882327Z","@version":"1","message":"Fetching expenses for user manas@gmail.com","logger_name":"com.smartfinance.expensetracker.service.ExpenseService","thread_name":"http-nio-9000-exec-6","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:56:37.839869018Z","@version":"1","message":"Commencing graceful shutdown. Waiting for active requests to complete","logger_name":"org.springframework.boot.web.embedded.tomcat.GracefulShutdown","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:56:37.847892713Z","@version":"1","message":"Graceful shutdown complete","logger_name":"org.springframework.boot.web.embedded.tomcat.GracefulShutdown","thread_name":"tomcat-shutdown","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:56:37.858799111Z","@version":"1","message":"Closing JPA EntityManagerFactory for persistence unit 'default'","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:56:37.861456078Z","@version":"1","message":"HikariPool-1 - Shutdown initiated...","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-04-22T10:56:37.868439285Z","@version":"1","message":"HikariPool-1 - Shutdown completed.","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:11.248331606Z","@version":"1","message":"HV000001: Hibernate Validator 8.0.2.Final","logger_name":"org.hibernate.validator.internal.util.Version","thread_name":"background-preinit","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:11.344035616Z","@version":"1","message":"Starting ExpenseTrackerApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/app.jar started by root in /app)","logger_name":"com.smartfinance.expensetracker.ExpenseTrackerApplication","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:11.345081808Z","@version":"1","message":"The following 1 profile is active: \"vault\"","logger_name":"com.smartfinance.expensetracker.ExpenseTrackerApplication","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:12.387943365Z","@version":"1","message":"Bootstrapping Spring Data JPA repositories in DEFAULT mode.","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:12.489834477Z","@version":"1","message":"Finished Spring Data repository scanning in 76 ms. Found 2 JPA repository interfaces.","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:12.96197325Z","@version":"1","message":"BeanFactory id=2d8f92e8-f115-3f49-b59b-36825cbd0cd0","logger_name":"org.springframework.cloud.context.scope.GenericScope","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.587207224Z","@version":"1","message":"Tomcat initialized with port 9000 (http)","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.601555824Z","@version":"1","message":"Initializing ProtocolHandler [\"http-nio-9000\"]","logger_name":"org.apache.coyote.http11.Http11NioProtocol","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.605223561Z","@version":"1","message":"Starting service [Tomcat]","logger_name":"org.apache.catalina.core.StandardService","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.605548814Z","@version":"1","message":"Starting Servlet engine: [Apache Tomcat/10.1.39]","logger_name":"org.apache.catalina.core.StandardEngine","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.659749544Z","@version":"1","message":"Initializing Spring embedded WebApplicationContext","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.661453872Z","@version":"1","message":"Root WebApplicationContext: initialization completed in 2247 ms","logger_name":"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:13.883509608Z","@version":"1","message":"HHH000204: Processing PersistenceUnitInfo [name: default]","logger_name":"org.hibernate.jpa.internal.util.LogHelper","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.012752912Z","@version":"1","message":"HHH000412: Hibernate ORM core version 6.6.11.Final","logger_name":"org.hibernate.Version","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.060534287Z","@version":"1","message":"HHH000026: Second-level cache disabled","logger_name":"org.hibernate.cache.internal.RegionFactoryInitiator","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.535030639Z","@version":"1","message":"No LoadTimeWeaver setup: ignoring JPA class transformer","logger_name":"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.574220315Z","@version":"1","message":"HikariPool-1 - Starting...","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.86027767Z","@version":"1","message":"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@36665c11","logger_name":"com.zaxxer.hikari.pool.HikariPool","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.861987046Z","@version":"1","message":"HikariPool-1 - Start completed.","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:14.905207204Z","@version":"1","message":"HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)","logger_name":"org.hibernate.orm.deprecation","thread_name":"main","level":"WARN","level_value":30000}
+{"@timestamp":"2025-05-16T17:10:14.92520663Z","@version":"1","message":"HHH10001005: Database info:\n\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\n\tDatabase driver: undefined/unknown\n\tDatabase version: 16.8\n\tAutocommit mode: undefined/unknown\n\tIsolation level: undefined/unknown\n\tMinimum pool size: undefined/unknown\n\tMaximum pool size: undefined/unknown","logger_name":"org.hibernate.orm.connections.pooling","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:16.003003663Z","@version":"1","message":"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)","logger_name":"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:16.151076383Z","@version":"1","message":"Initialized JPA EntityManagerFactory for persistence unit 'default'","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:16.587542546Z","@version":"1","message":"Hibernate is in classpath; If applicable, HQL parser will be used.","logger_name":"org.springframework.data.jpa.repository.query.QueryEnhancerFactory","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:17.153516826Z","@version":"1","message":"spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning","logger_name":"org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration","thread_name":"main","level":"WARN","level_value":30000}
+{"@timestamp":"2025-05-16T17:10:18.057944099Z","@version":"1","message":"Starting ProtocolHandler [\"http-nio-9000\"]","logger_name":"org.apache.coyote.http11.Http11NioProtocol","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:18.099642212Z","@version":"1","message":"Tomcat started on port 9000 (http) with context path '/'","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T17:10:18.114422691Z","@version":"1","message":"Started ExpenseTrackerApplication in 8.211 seconds (process running for 9.089)","logger_name":"com.smartfinance.expensetracker.ExpenseTrackerApplication","thread_name":"main","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T19:13:39.055920332Z","@version":"1","message":"Commencing graceful shutdown. Waiting for active requests to complete","logger_name":"org.springframework.boot.web.embedded.tomcat.GracefulShutdown","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T19:13:39.060400251Z","@version":"1","message":"Graceful shutdown complete","logger_name":"org.springframework.boot.web.embedded.tomcat.GracefulShutdown","thread_name":"tomcat-shutdown","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T19:13:39.063839824Z","@version":"1","message":"Closing JPA EntityManagerFactory for persistence unit 'default'","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T19:13:39.065379355Z","@version":"1","message":"HikariPool-1 - Shutdown initiated...","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
+{"@timestamp":"2025-05-16T19:13:39.070577346Z","@version":"1","message":"HikariPool-1 - Shutdown completed.","logger_name":"com.zaxxer.hikari.HikariDataSource","thread_name":"SpringContextShutdownHook","level":"INFO","level_value":20000}
