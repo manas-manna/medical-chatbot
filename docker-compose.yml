@@ -3,6 +3,7 @@ version: '3.9'
 services:
   postgres:
     image: postgres:16
+    container_name: postgres
     environment:
       POSTGRES_DB: expense_tracker
       POSTGRES_USER: postgres
@@ -29,8 +30,7 @@ services:
 
   backend:
     container_name: backend
-    build:
-      context: ./backend
+    image: manasmann/backend:latest
     ports:
       - "9000:9000"
     depends_on:
@@ -46,8 +46,7 @@ services:
 
   frontend:
     container_name: frontend
-    build:
-      context: ./frontend
+    image: manasmann/frontend:latest
     ports:
       - "3000:80"
     depends_on:
@@ -55,8 +54,7 @@ services:
 
   fraud_detection:
     container_name: fraud_detection
-    build:
-      context: ./fraud-detection
+    image: manasmann/fraud-detection:latest
     ports:
       - "8000:8000"
 
