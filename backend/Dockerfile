@@ -1,14 +1,18 @@
-# Use a base image with Java runtime
-FROM openjdk:17-jdk-slim
+FROM python:3.10
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the built jar from the host to the container
-COPY target/expense-tracker-backend-0.0.1-SNAPSHOT.jar app.jar
+# Copy requirements and install
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Expose the port the app runs on
-EXPOSE 9000
+# Copy the app and ml_models folders
+COPY app/ ./app
+COPY ml_models/ ./ml_models
 
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Expose FastAPI port
+EXPOSE 8000
+
+# Start the FastAPI app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

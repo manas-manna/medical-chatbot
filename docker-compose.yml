@@ -1,63 +1,31 @@
 version: '3.9'
-
 services:
-  postgres:
-    image: postgres:16
-    container_name: postgres
-    environment:
-      POSTGRES_DB: expense_tracker
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  vault:
-    image: hashicorp/vault:1.14.3
-    container_name: vault
-    ports:
-      - "8200:8200"
-    cap_add:
-      - IPC_LOCK
-    environment:
-      VAULT_DEV_ROOT_TOKEN_ID: root
-      VAULT_ADDR: http://0.0.0.0:8200
-    volumes:
-      - vault-data:/vault/data
-      - ./vault-init.sh:/vault-init.sh
-    entrypoint: sh -c "vault server -dev & sleep 5 && sh /vault-init.sh && wait $(pgrep -f 'vault server')"
-
   backend:
     container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     image: manasmann/backend:latest
     ports:
-      - "9000:9000"
-    depends_on:
-      - postgres
-      - fraud_detection
-      - vault
-    environment:
-      SPRING_CLOUD_VAULT_TOKEN: root
-      SPRING_CLOUD_VAULT_URI: http://vault:8200
-      SPRING_PROFILES_ACTIVE: vault
+      - "8000:8000"
     volumes:
-      - ./logs:/logs
-
+      - ./logs:/app/logs
+    environment:
+      - SECRET_KEY=EQqexli0J8yG7350ceR9u1_RysjRfpxfPmeBk2UXB0U
+      - MONGODB_URL=mongodb://host.docker.internal:27017/medicaldb
+      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   frontend:
     container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile 
     image: manasmann/frontend:latest
     ports:
       - "3000:80"
     depends_on:
       - backend
-
-  fraud_detection:
-    container_name: fraud_detection
-    image: manasmann/fraud-detection:latest
-    ports:
-      - "8000:8000"
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.0
     container_name: elasticsearch
@@ -68,7 +36,6 @@ services:
       - "9200:9200"
     volumes:
       - esdata:/usr/share/elasticsearch/data
-
   logstash:
     image: docker.elastic.co/logstash/logstash:8.6.0
     container_name: logstash
@@ -78,7 +45,6 @@ services:
       - "5044:5044"
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-
   kibana:
     image: docker.elastic.co/kibana/kibana:8.6.0
     container_name: kibana
@@ -90,18 +56,14 @@ services:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
       
   filebeat:
-   image: docker.elastic.co/beats/filebeat:8.6.0
-   container_name: filebeat
-   depends_on:
-     - logstash
-   volumes:
-     - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
-     - ./backend-logs:/logs:ro
-   user: root
-   command: ["--strict.perms=false"]
-
+    image: docker.elastic.co/beats/filebeat:8.6.0
+    container_name: filebeat
+    depends_on:
+      - logstash
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./logs:/logs:ro
+    user: root
+    command: ["--strict.perms=false"]
 volumes:
-  pgdata:
-  vault-data:
   esdata:
-

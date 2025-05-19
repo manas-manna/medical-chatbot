@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: app-config
-  namespace: expense-tracker
-data:
-  SPRING_PROFILES_ACTIVE: "vault"
-  SPRING_CLOUD_VAULT_URI: "http://vault:8200"
-  ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"

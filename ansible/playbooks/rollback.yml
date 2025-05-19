@@ -1,0 +1,42 @@
+# playbooks/rollback.yml
+---
+- name: Rollback Kubernetes Deployments
+  hosts: masters
+  become: false
+  vars_files:
+    - ../vars/main.yml
+  tasks:
+    - name: Rollback backend deployment
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl -n {{ app_namespace }} rollout undo deployment/backend
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+      ignore_errors: yes
+
+    - name: Rollback frontend deployment
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl -n {{ app_namespace }} rollout undo deployment/frontend
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+      ignore_errors: yes
+
+    - name: Rollback fraud-detection deployment
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl -n {{ app_namespace }} rollout undo deployment/fraud-detection
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+      ignore_errors: yes
+
+    - name: Verify rollback status
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl get pods -n {{ app_namespace }}
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"

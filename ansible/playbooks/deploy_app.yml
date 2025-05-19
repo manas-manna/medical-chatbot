@@ -1,0 +1,189 @@
+---
+- name: Deploy Application to Kubernetes
+  hosts: masters
+  become: false
+  vars_files:
+    - ../vars/main.yml
+  tasks:
+    - name: Ensure kubernetes Python module is installed
+      pip:
+        name: kubernetes>=12.0.0
+        state: present
+      become: true
+
+    - name: Create Kubernetes Resources Directory
+      file:
+        path: /home/{{ k8s_user }}/kubernetes
+        state: directory
+      become: true
+
+    - name: Copy Kubernetes manifests
+      copy:
+        src: ../../kubernetes/
+        dest: /home/{{ k8s_user }}/kubernetes/
+        owner: "{{ k8s_user }}"
+        group: "{{ k8s_user }}"
+        mode: 0644
+      become: true
+
+    - name: Create directories for persistent volumes
+      file:
+        path: "/mnt/data/{{ item }}"
+        state: directory
+        mode: 0777
+      loop:
+        - postgres
+        - elasticsearch
+        - vault
+        - logs
+      become: true
+
+    - name: Apply Kubernetes manifests in order
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl apply -f /home/{{ k8s_user }}/kubernetes/namespace.yaml
+        sleep 2
+        kubectl apply -f /home/{{ k8s_user }}/kubernetes/config.yaml
+        kubectl apply -f /home/{{ k8s_user }}/kubernetes/storage.yaml
+        sleep 5
+        kubectl apply -f /home/{{ k8s_user }}/kubernetes/deployments.yaml
+        sleep 20
+        kubectl apply -f /home/{{ k8s_user }}/kubernetes/services.yaml
+        sleep 5
+        kubectl apply -f /home/{{ k8s_user }}/kubernetes/hpa.yaml
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+
+    - name: Wait for Vault to be ready
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl -n {{ app_namespace }} rollout status deployment/vault
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+      register: vault_status
+      until: vault_status.rc == 0
+      retries: 10
+      delay: 10
+
+    - name: Initialize Vault with secrets
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl -n {{ app_namespace }} port-forward svc/vault 8200:8200 &
+        PID=$!
+        sleep 5
+        export VAULT_ADDR=http://localhost:8200
+        export VAULT_TOKEN=root
+        
+        # Run the vault initialization script
+        /home/{{ k8s_user }}/vault-init.sh
+        
+        kill $PID
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+
+    - name: Wait for all deployments to be ready
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl -n {{ app_namespace }} rollout status deployment/{{ item }}
+      args:
+        executable: /bin/bash
+      loop:
+        - postgres
+        - vault
+        - elasticsearch
+        - logstash
+        - kibana
+        - backend
+        - frontend
+        - fraud-detection
+      become_user: "{{ k8s_user }}"
+      register: deployment_status
+      until: deployment_status.rc == 0
+      retries: 10
+      delay: 10
+      ignore_errors: yes
+
+    - name: Verify deployment status
+      shell: |
+        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+        kubectl get pods -n {{ app_namespace }}
+      args:
+        executable: /bin/bash
+      become_user: "{{ k8s_user }}"
+
+- name: Set up port forwarding service
+  hosts: masters
+  become: true
+  vars_files:
+    - ../vars/main.yml
+  tasks:
+    - name: Create port forwarding script
+      copy:
+        content: |
+          #!/bin/bash
+          
+          # Kill any existing port forwards
+          pkill -f "kubectl port-forward"
+          
+          # Export KUBECONFIG
+          export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
+          
+          # Start port forwarding
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/frontend 3000:80 &
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/backend 9000:9000 &
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/fraud-detection 8000:8000 &
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/kibana 5601:5601 &
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/elasticsearch 9200:9200 &
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/logstash 5044:5044 &
+          kubectl -n {{ app_namespace }} port-forward --address 0.0.0.0 service/vault 8200:8200 &
+          
+          # Keep script running
+          wait
+        dest: /home/{{ k8s_user }}/port-forward.sh
+        owner: "{{ k8s_user }}"
+        group: "{{ k8s_user }}"
+        mode: '0755'
+      
+    - name: Create systemd service for port forwarding
+      copy:
+        content: |
+          [Unit]
+          Description=Kubernetes Port Forwarding
+          After=network.target
+          
+          [Service]
+          ExecStart=/bin/bash /home/{{ k8s_user }}/port-forward.sh
+          User={{ k8s_user }}
+          Restart=on-failure
+          RestartSec=5s
+          Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+          
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/k8s-port-forward.service
+        mode: '0644'
+      
+    - name: Enable and start port forwarding service
+      systemd:
+        name: k8s-port-forward
+        state: started
+        enabled: yes
+        daemon_reload: yes
+        
+    - name: Get master node IP
+      shell: hostname -I | awk '{print $1}'
+      register: master_ip
+      
+    - name: Display access information
+      debug:
+        msg: |
+          Services are now accessible at:
+          - Frontend: http://{{ master_ip.stdout }}:3000
+          - Backend API: http://{{ master_ip.stdout }}:9000
+          - Fraud Detection API: http://{{ master_ip.stdout }}:8000
+          - Kibana Dashboard: http://{{ master_ip.stdout }}:5601
+          - Elasticsearch API: http://{{ master_ip.stdout }}:9200
+          - Vault UI: http://{{ master_ip.stdout }}:8200

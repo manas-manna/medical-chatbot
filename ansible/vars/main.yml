@@ -1,0 +1,19 @@
+---
+# Docker configuration
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+
+# Kubernetes configuration
+kubernetes_version: 1.28.0
+pod_network_cidr: "10.244.0.0/16"
+service_cidr: "10.96.0.0/12"
+
+# User configuration
+k8s_user: "ubuntu"  # Replace with your user
+
+# Application configuration
+docker_registry_user: "manasmann"
+app_version: "latest"
+app_namespace: "expense-tracker"
