@@ -40,7 +40,8 @@ spec:
   ports:
   - port: 5601
     targetPort: 5601
-  type: LoadBalancer
+    nodePort: 30601  # Added for Minikube access
+  type: NodePort  # Changed for easier access in Minikube
 ---
 # Application Services
 apiVersion: v1
@@ -54,7 +55,8 @@ spec:
   ports:
   - port: 8000
     targetPort: 8000
-  type: ClusterIP
+    nodePort: 30800  # Added for Minikube access
+  type: NodePort  # Changed for easier access in Minikube
 ---
 apiVersion: v1
 kind: Service
@@ -67,15 +69,5 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-  type: LoadBalancer
-  ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongodb-external
-  namespace: medical-chatbot
-spec:
-  type: ExternalName
-  externalName: host.minikube.internal
-  ports:
-  - port: 27017
+    nodePort: 30080  # Added for Minikube access
+  type: NodePort  # Changed for easier access in Minikube

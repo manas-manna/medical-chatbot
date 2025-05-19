@@ -125,7 +125,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: manasmann/backend:latest
+        image: local/backend:latest  # Changed for Minikube
+        imagePullPolicy: Never  # Added for Minikube
         ports:
         - containerPort: 8000
         env:
@@ -151,11 +152,10 @@ spec:
           limits:
             cpu: 1000m
             memory: 2Gi
-        # Health checks removed as requested
         volumeMounts:
         - name: logs-volume
           mountPath: /app/logs
-      # Add Filebeat as a sidecar container
+      # Filebeat sidecar container
       - name: filebeat
         image: docker.elastic.co/beats/filebeat:8.6.0
         args: ["--strict.perms=false"]
@@ -166,7 +166,7 @@ spec:
           mountPath: /usr/share/filebeat/filebeat.yml
           subPath: filebeat.yml
         - name: logs-volume
-          mountPath: /logs
+          mountPath: /app/logs  # Changed to match the backend's mount path
       volumes:
       - name: logs-volume
         persistentVolumeClaim:
@@ -192,7 +192,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: manasmann/frontend:latest
+        image: local/frontend:latest  # Changed for Minikube
+        imagePullPolicy: Never  # Added for Minikube
         ports:
         - containerPort: 80
         resources:

@@ -4,7 +4,7 @@ metadata:
   name: app-config
   namespace: medical-chatbot
 data:
-  MONGODB_URL: "mongodb://mongodb-external:27017/medicaldb"
+  MONGODB_URL: "mongodb://host.minikube.internal:27017/medicaldb"
   ACCESS_TOKEN_EXPIRE_MINUTES: "60"
 ---
 apiVersion: v1
@@ -62,7 +62,7 @@ data:
     - type: log
       enabled: true
       paths:
-        - /logs/app.log
+        - /app/logs/app.log
       multiline:
         pattern: '^\d{4}-\d{2}-\d{2}'
         negate: true
