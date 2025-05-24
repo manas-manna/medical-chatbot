@@ -53,13 +53,13 @@ pipeline {
                         dir('backend') {
                             sh '''
                                 echo "Building Backend Image..."
-                                docker build -t $DOCKER_USER/medical-chatbot-backend:latest .
+                                // docker build -t $DOCKER_USER/medical-chatbot-backend:latest .
                                 
                                 echo "Pushing Backend Images..."
-                                docker push $DOCKER_USER/medical-chatbot-backend:latest
+                                // docker push $DOCKER_USER/medical-chatbot-backend:latest
                                 
                                 echo "Loading image to Minikube..."
-                                minikube image load $DOCKER_USER/medical-chatbot-backend:latest
+                                // minikube image load $DOCKER_USER/medical-chatbot-backend:latest
                             '''
                         }
                     }
@@ -69,13 +69,13 @@ pipeline {
                         dir('frontend') {
                             sh '''
                                 echo "Building Frontend Image..."
-                                docker build -t $DOCKER_USER/medical-chatbot-frontend:latest .
+                                // docker build -t $DOCKER_USER/medical-chatbot-frontend:latest .
                                 
                                 echo "Pushing Frontend Images..."
-                                docker push $DOCKER_USER/medical-chatbot-frontend:latest
+                                // docker push $DOCKER_USER/medical-chatbot-frontend:latest
                                 
                                 echo "Loading image to Minikube..."
-                                minikube image load $DOCKER_USER/medical-chatbot-frontend:latest
+                                // minikube image load $DOCKER_USER/medical-chatbot-frontend:latest
                             '''
                         }
                     }
