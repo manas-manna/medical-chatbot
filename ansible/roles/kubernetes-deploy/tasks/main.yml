@@ -1,6 +1,6 @@
 - name: Create namespace
   kubernetes.core.k8s:
-    name: "{{ namespace }}"
+    name: medical-chatbot
     api_version: v1
     kind: Namespace
     state: present
@@ -8,17 +8,17 @@
 - name: Apply storage configuration
   kubernetes.core.k8s:
     state: present
-    src: "{{ playbook_dir }}/../kubernetes/storage.yaml"
+    src: "../../../../kubernetes/storage.yaml"
     
 - name: Apply configuration maps and secrets
   kubernetes.core.k8s:
     state: present
-    src: "{{ playbook_dir }}/../kubernetes/config.yaml"
+    src: "../../../../kubernetes/config.yaml"
     
 - name: Apply services
   kubernetes.core.k8s:
     state: present
-    src: "{{ playbook_dir }}/../kubernetes/services.yaml"
+    src: "../../../../kubernetes/services.yaml"
     
 - name: Deploy infrastructure components first
   kubernetes.core.k8s:
@@ -29,7 +29,7 @@
       kind: Deployment
       metadata:
         name: elasticsearch
-        namespace: "{{ namespace }}"
+        namespace: "medical-chatbot"
       spec:
         replicas: 1
         selector:
@@ -71,7 +71,7 @@
     api_version: apps/v1
     kind: Deployment
     name: elasticsearch
-    namespace: "{{ namespace }}"
+    namespace: "medical-chatbot"
     wait: true
     wait_condition:
       type: Available
@@ -86,7 +86,7 @@
       kind: Deployment
       metadata:
         name: logstash
-        namespace: "{{ namespace }}"
+        namespace: "medical-chatbot"
       spec:
         replicas: 1
         selector:
@@ -126,7 +126,7 @@
       kind: Deployment
       metadata:
         name: kibana
-        namespace: "{{ namespace }}"
+        namespace: "medical-chatbot"
       spec:
         replicas: 1
         selector:
@@ -161,9 +161,9 @@
 - name: Deploy application components
   kubernetes.core.k8s:
     state: present
-    src: "{{ playbook_dir }}/../kubernetes/deployments.yaml"
+    src: "../../../../kubernetes/deployments.yaml"
     
 - name: Apply HPA configuration
   kubernetes.core.k8s:
     state: present
-    src: "{{ playbook_dir }}/../kubernetes/hpa.yaml"
+    src: "../../../../kubernetes/hpa.yaml"

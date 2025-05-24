@@ -3,7 +3,7 @@
     api_version: apps/v1
     kind: Deployment
     name: "{{ item }}"
-    namespace: "{{ namespace }}"
+    namespace: "medical-chatbot"
     wait: true
     wait_condition:
       type: Available
@@ -20,7 +20,7 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Pod
-    namespace: "{{ namespace }}"
+    namespace: "medical-chatbot"
   register: pod_status
   
 - name: Display pod information
@@ -41,7 +41,7 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
-    namespace: "{{ namespace }}"
+    namespace: "medical-chatbot"
   register: service_info
   
 - name: Display service endpoints
@@ -54,7 +54,7 @@
   kubernetes.core.k8s_info:
     api_version: autoscaling/v2
     kind: HorizontalPodAutoscaler
-    namespace: "{{ namespace }}"
+    namespace: "medical-chatbot"
   register: hpa_status
   
 - name: Display HPA information
