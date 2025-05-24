@@ -1,6 +1,5 @@
 - name: Create namespace
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     name: "{{ namespace }}"
     api_version: v1
     kind: Namespace
@@ -8,25 +7,21 @@
     
 - name: Apply storage configuration
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     src: "{{ playbook_dir }}/../kubernetes/storage.yaml"
     
 - name: Apply configuration maps and secrets
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     src: "{{ playbook_dir }}/../kubernetes/config.yaml"
     
 - name: Apply services
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     src: "{{ playbook_dir }}/../kubernetes/services.yaml"
     
 - name: Deploy infrastructure components first
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     definition: "{{ item }}"
   loop:
@@ -73,7 +68,6 @@
                 
 - name: Wait for Elasticsearch to be ready
   kubernetes.core.k8s_info:
-    kubeconfig: "{{ kubeconfig }}"
     api_version: apps/v1
     kind: Deployment
     name: elasticsearch
@@ -86,7 +80,6 @@
     
 - name: Deploy Logstash
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     definition:
       apiVersion: apps/v1
@@ -127,7 +120,6 @@
                 
 - name: Deploy Kibana
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     definition:
       apiVersion: apps/v1
@@ -168,12 +160,10 @@
     
 - name: Deploy application components
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     src: "{{ playbook_dir }}/../kubernetes/deployments.yaml"
     
 - name: Apply HPA configuration
   kubernetes.core.k8s:
-    kubeconfig: "{{ kubeconfig }}"
     state: present
     src: "{{ playbook_dir }}/../kubernetes/hpa.yaml"

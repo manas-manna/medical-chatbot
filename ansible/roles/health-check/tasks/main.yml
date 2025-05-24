@@ -1,6 +1,5 @@
 - name: Wait for all deployments to be available
   kubernetes.core.k8s_info:
-    kubeconfig: "{{ kubeconfig }}"
     api_version: apps/v1
     kind: Deployment
     name: "{{ item }}"
@@ -19,7 +18,6 @@
     
 - name: Get pod status
   kubernetes.core.k8s_info:
-    kubeconfig: "{{ kubeconfig }}"
     api_version: v1
     kind: Pod
     namespace: "{{ namespace }}"
@@ -41,7 +39,6 @@
     
 - name: Get service information
   kubernetes.core.k8s_info:
-    kubeconfig: "{{ kubeconfig }}"
     api_version: v1
     kind: Service
     namespace: "{{ namespace }}"
@@ -55,7 +52,6 @@
   
 - name: Verify HPA status
   kubernetes.core.k8s_info:
-    kubeconfig: "{{ kubeconfig }}"
     api_version: autoscaling/v2
     kind: HorizontalPodAutoscaler
     namespace: "{{ namespace }}"
