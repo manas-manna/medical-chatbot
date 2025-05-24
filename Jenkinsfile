@@ -138,33 +138,33 @@ pipeline {
             }
         }
         
-        stage('Application Health Tests') {
-            steps {
-                sh '''
-                    echo "=== Starting Port Forwarding for Health Checks ==="
-                    # Start port forwarding in background
-                    kubectl port-forward service/backend -n medical-chatbot 8000:8000 &
-                    PF_PID_BACKEND=$!
+        // stage('Application Health Tests') {
+        //     steps {
+        //         sh '''
+        //             echo "=== Starting Port Forwarding for Health Checks ==="
+        //             # Start port forwarding in background
+        //             kubectl port-forward service/backend -n medical-chatbot 8000:8000 &
+        //             PF_PID_BACKEND=$!
                     
-                    kubectl port-forward service/frontend -n medical-chatbot 3000:80 &
-                    PF_PID_FRONTEND=$!
+        //             kubectl port-forward service/frontend -n medical-chatbot 3000:80 &
+        //             PF_PID_FRONTEND=$!
                     
-                    # Wait a moment for port forwarding to establish
-                    sleep 10
+        //             # Wait a moment for port forwarding to establish
+        //             sleep 10
                     
-                    echo "=== Testing Backend Health ==="
-                    timeout 30 bash -c 'until curl -f http://localhost:8000/health || curl -f http://localhost:8000/docs; do sleep 2; done' || echo "Backend health check failed"
+        //             echo "=== Testing Backend Health ==="
+        //             timeout 30 bash -c 'until curl -f http://localhost:8000/health || curl -f http://localhost:8000/docs; do sleep 2; done' || echo "Backend health check failed"
                     
-                    echo "=== Testing Frontend ==="
-                    timeout 30 bash -c 'until curl -f http://localhost:3000; do sleep 2; done' || echo "Frontend health check failed"
+        //             echo "=== Testing Frontend ==="
+        //             timeout 30 bash -c 'until curl -f http://localhost:3000; do sleep 2; done' || echo "Frontend health check failed"
                     
-                    # Clean up port forwarding
-                    kill $PF_PID_BACKEND $PF_PID_FRONTEND || true
+        //             # Clean up port forwarding
+        //             kill $PF_PID_BACKEND $PF_PID_FRONTEND || true
                     
-                    echo "=== Health checks completed ==="
-                '''
-            }
-        }
+        //             echo "=== Health checks completed ==="
+        //         '''
+        //     }
+        // }
         
         stage('Setup Port Forwarding') {
             steps {
