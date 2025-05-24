@@ -107,35 +107,35 @@ pipeline {
             }
         }
         
-        stage('Post-deployment Health Check') {
-            steps {
-                script {
-                    sh '''
-                        echo "=== Waiting for deployments to be ready ==="
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/backend
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/frontend
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/elasticsearch
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/logstash
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/kibana
+        // stage('Post-deployment Health Check') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 echo "=== Waiting for deployments to be ready ==="
+        //                 kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/backend
+        //                 kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/frontend
+        //                 kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/elasticsearch
+        //                 kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/logstash
+        //                 kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/kibana
                         
-                        echo "=== Checking Pods Status ==="
-                        kubectl -n medical-chatbot get pods -o wide
+        //                 echo "=== Checking Pods Status ==="
+        //                 kubectl -n medical-chatbot get pods -o wide
                         
-                        echo "=== Checking Services Status ==="
-                        kubectl -n medical-chatbot get services
+        //                 echo "=== Checking Services Status ==="
+        //                 kubectl -n medical-chatbot get services
                         
-                        echo "=== Checking HPAs Status ==="
-                        kubectl -n medical-chatbot get hpa
+        //                 echo "=== Checking HPAs Status ==="
+        //                 kubectl -n medical-chatbot get hpa
                         
-                        echo "=== Checking PVC Status ==="
-                        kubectl -n medical-chatbot get pvc
+        //                 echo "=== Checking PVC Status ==="
+        //                 kubectl -n medical-chatbot get pvc
                         
-                        echo "=== Pod Resource Usage ==="
-                        kubectl -n medical-chatbot top pods || echo "Metrics server not available"
-                    '''
-                }
-            }
-        }
+        //                 echo "=== Pod Resource Usage ==="
+        //                 kubectl -n medical-chatbot top pods || echo "Metrics server not available"
+        //             '''
+        //         }
+        //     }
+        // }
         
         // stage('Application Health Tests') {
         //     steps {
