@@ -1,4 +1,3 @@
----
 - name: Create namespace
   kubernetes.core.k8s:
     kubeconfig: "{{ kubeconfig }}"
@@ -178,5 +177,3 @@
     kubeconfig: "{{ kubeconfig }}"
     state: present
     src: "{{ playbook_dir }}/../kubernetes/hpa.yaml"
-
----

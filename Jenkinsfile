@@ -5,7 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_USER = "${DOCKERHUB_CREDENTIALS_USR}"
         DOCKER_PASS = "${DOCKERHUB_CREDENTIALS_PSW}"
-        KUBECONFIG = "${env.HOME}/.kube/config"
+        KUBECONFIG = credentials('kubeconfig')
     }
     
     stages {
