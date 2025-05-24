@@ -1,0 +1,182 @@
+---
+- name: Create namespace
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    name: "{{ namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+    
+- name: Apply storage configuration
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    src: "{{ playbook_dir }}/../kubernetes/storage.yaml"
+    
+- name: Apply configuration maps and secrets
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    src: "{{ playbook_dir }}/../kubernetes/config.yaml"
+    
+- name: Apply services
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    src: "{{ playbook_dir }}/../kubernetes/services.yaml"
+    
+- name: Deploy infrastructure components first
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ item }}"
+  loop:
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: elasticsearch
+        namespace: "{{ namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: elasticsearch
+        template:
+          metadata:
+            labels:
+              app: elasticsearch
+          spec:
+            containers:
+            - name: elasticsearch
+              image: docker.elastic.co/elasticsearch/elasticsearch:8.6.0
+              ports:
+              - containerPort: 9200
+              - containerPort: 9300
+              env:
+              - name: discovery.type
+                value: "single-node"
+              - name: xpack.security.enabled
+                value: "false"
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+                limits:
+                  cpu: 2000m
+                  memory: 2Gi
+              volumeMounts:
+              - name: elasticsearch-storage
+                mountPath: /usr/share/elasticsearch/data
+            volumes:
+            - name: elasticsearch-storage
+              persistentVolumeClaim:
+                claimName: elasticsearch-pvc
+                
+- name: Wait for Elasticsearch to be ready
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    api_version: apps/v1
+    kind: Deployment
+    name: elasticsearch
+    namespace: "{{ namespace }}"
+    wait: true
+    wait_condition:
+      type: Available
+      status: "True"
+    wait_timeout: 300
+    
+- name: Deploy Logstash
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: logstash
+        namespace: "{{ namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: logstash
+        template:
+          metadata:
+            labels:
+              app: logstash
+          spec:
+            containers:
+            - name: logstash
+              image: docker.elastic.co/logstash/logstash:8.6.0
+              ports:
+              - containerPort: 5044
+              resources:
+                requests:
+                  cpu: 300m
+                  memory: 512Mi
+                limits:
+                  cpu: 1000m
+                  memory: 1Gi
+              volumeMounts:
+              - name: logstash-config
+                mountPath: /usr/share/logstash/pipeline/logstash.conf
+                subPath: logstash.conf
+            volumes:
+            - name: logstash-config
+              configMap:
+                name: logstash-config
+                
+- name: Deploy Kibana
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: kibana
+        namespace: "{{ namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: kibana
+        template:
+          metadata:
+            labels:
+              app: kibana
+          spec:
+            containers:
+            - name: kibana
+              image: docker.elastic.co/kibana/kibana:8.6.0
+              ports:
+              - containerPort: 5601
+              env:
+              - name: ELASTICSEARCH_HOSTS
+                value: "http://elasticsearch:9200"
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+                limits:
+                  cpu: 500m
+                  memory: 1Gi
+                  
+- name: Wait for infrastructure services
+  pause:
+    seconds: 30
+    prompt: "Waiting for infrastructure services to stabilize..."
+    
+- name: Deploy application components
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    src: "{{ playbook_dir }}/../kubernetes/deployments.yaml"
+    
+- name: Apply HPA configuration
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    src: "{{ playbook_dir }}/../kubernetes/hpa.yaml"
+
+---

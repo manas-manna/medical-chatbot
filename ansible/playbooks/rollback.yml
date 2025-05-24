@@ -1,42 +1,59 @@
-# playbooks/rollback.yml
 ---
-- name: Rollback Kubernetes Deployments
-  hosts: masters
-  become: false
-  vars_files:
-    - ../vars/main.yml
+- name: Rollback Medical Chatbot Application
+  hosts: minikube
+  gather_facts: no
+  vars:
+    kubeconfig: "{{ kubeconfig_path | default('~/.kube/config') }}"
+    
   tasks:
-    - name: Rollback backend deployment
-      shell: |
-        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
-        kubectl -n {{ app_namespace }} rollout undo deployment/backend
-      args:
-        executable: /bin/bash
-      become_user: "{{ k8s_user }}"
+    - name: Display rollback start message
+      debug:
+        msg: "Starting rollback of {{ app_name }} in namespace {{ namespace }}"
+        
+    - name: Scale down all deployments
+      kubernetes.core.k8s:
+        kubeconfig: "{{ kubeconfig }}"
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: "{{ item }}"
+            namespace: "{{ namespace }}"
+          spec:
+            replicas: 0
+      loop:
+        - backend
+        - frontend
+        - elasticsearch
+        - logstash
+        - kibana
       ignore_errors: yes
-
-    - name: Rollback frontend deployment
-      shell: |
-        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
-        kubectl -n {{ app_namespace }} rollout undo deployment/frontend
-      args:
-        executable: /bin/bash
-      become_user: "{{ k8s_user }}"
+      
+    - name: Wait for pods to terminate
+      pause:
+        seconds: 30
+        
+    - name: Delete all resources
+      kubernetes.core.k8s:
+        kubeconfig: "{{ kubeconfig }}"
+        state: absent
+        api_version: v1
+        kind: "{{ item.kind }}"
+        name: "{{ item.name }}"
+        namespace: "{{ namespace }}"
+      loop:
+        - { kind: "Deployment", name: "backend" }
+        - { kind: "Deployment", name: "frontend" }
+        - { kind: "Deployment", name: "elasticsearch" }
+        - { kind: "Deployment", name: "logstash" }
+        - { kind: "Deployment", name: "kibana" }
+        - { kind: "HorizontalPodAutoscaler", name: "backend-hpa" }
+        - { kind: "HorizontalPodAutoscaler", name: "frontend-hpa" }
       ignore_errors: yes
+      
+    - name: Display rollback completion message
+      debug:
+        msg: "🔄 Rollback completed. All deployments have been scaled down and removed."
 
-    - name: Rollback fraud-detection deployment
-      shell: |
-        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
-        kubectl -n {{ app_namespace }} rollout undo deployment/fraud-detection
-      args:
-        executable: /bin/bash
-      become_user: "{{ k8s_user }}"
-      ignore_errors: yes
-
-    - name: Verify rollback status
-      shell: |
-        export KUBECONFIG=/home/{{ k8s_user }}/.kube/config
-        kubectl get pods -n {{ app_namespace }}
-      args:
-        executable: /bin/bash
-      become_user: "{{ k8s_user }}"
+---

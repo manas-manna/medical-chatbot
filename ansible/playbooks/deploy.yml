@@ -1,0 +1,29 @@
+- name: Deploy Medical Chatbot Application
+  hosts: minikube
+  gather_facts: no
+  vars:
+    kubeconfig: "{{ kubeconfig_path | default('~/.kube/config') }}"
+    
+  tasks:
+    - name: Check if Minikube is running
+      shell: minikube status
+      register: minikube_status
+      failed_when: "'Running' not in minikube_status.stdout"
+      
+    - name: Display deployment start message
+      debug:
+        msg: "Starting deployment of {{ app_name }} to namespace {{ namespace }}"
+        
+    - name: Apply Kubernetes manifests using role
+      include_role:
+        name: kubernetes-deploy
+        
+    - name: Verify deployment using role
+      include_role:
+        name: health-check
+        
+    - name: Display deployment completion message
+      debug:
+        msg: "✅ Deployment completed successfully! All services are running in {{ namespace }} namespace"
+
+---

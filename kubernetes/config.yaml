@@ -81,4 +81,4 @@ metadata:
 type: Opaque
 data:
   # Base64 encoded values
-  SECRET_KEY: RVFxZXhsaTBKOHlHNzM1MGNlUjl1MV9SeXNqUmZweGZQbWVCazJVWEIwVQ==  # EQqexli0J8yG7350ceR9u1_RysjRfpxfPmeBk2UXB0U
+  SECRET_KEY: RVFxZXhsaTBKOHlHNzM1MGNlUjl1MV9SeXNqUmZweGZQbWVCazJVWEIwVQ== 

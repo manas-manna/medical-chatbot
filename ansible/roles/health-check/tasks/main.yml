@@ -1,0 +1,69 @@
+---
+- name: Wait for all deployments to be available
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    api_version: apps/v1
+    kind: Deployment
+    name: "{{ item }}"
+    namespace: "{{ namespace }}"
+    wait: true
+    wait_condition:
+      type: Available
+      status: "True"
+    wait_timeout: 300
+  loop:
+    - backend
+    - frontend
+    - elasticsearch
+    - logstash
+    - kibana
+    
+- name: Get pod status
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    api_version: v1
+    kind: Pod
+    namespace: "{{ namespace }}"
+  register: pod_status
+  
+- name: Display pod information
+  debug:
+    msg: "Pod {{ item.metadata.name }} is {{ item.status.phase }}"
+  loop: "{{ pod_status.resources }}"
+  when: pod_status.resources is defined
+  
+- name: Check if all pods are running
+  fail:
+    msg: "Pod {{ item.metadata.name }} is not running (Status: {{ item.status.phase }})"
+  loop: "{{ pod_status.resources }}"
+  when: 
+    - pod_status.resources is defined
+    - item.status.phase != "Running"
+    
+- name: Get service information
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    api_version: v1
+    kind: Service
+    namespace: "{{ namespace }}"
+  register: service_info
+  
+- name: Display service endpoints
+  debug:
+    msg: "Service {{ item.metadata.name }} is available on port {{ item.spec.ports[0].port }}"
+  loop: "{{ service_info.resources }}"
+  when: service_info.resources is defined
+  
+- name: Verify HPA status
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    api_version: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    namespace: "{{ namespace }}"
+  register: hpa_status
+  
+- name: Display HPA information
+  debug:
+    msg: "HPA {{ item.metadata.name }} - Current: {{ item.status.currentReplicas | default('N/A') }}, Desired: {{ item.status.desiredReplicas | default('N/A') }}"
+  loop: "{{ hpa_status.resources }}"
+  when: hpa_status.resources is defined
