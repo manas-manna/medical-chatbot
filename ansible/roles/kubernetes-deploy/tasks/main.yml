@@ -8,4 +8,4 @@
     - "../../../../kubernetes/config.yaml"
     - "../../../../kubernetes/services.yaml"
     - "../../../../kubernetes/deployments.yaml"
-    - ".../../../../kubernetes/hpa.yaml"
+    - "../../../../kubernetes/hpa.yaml"
