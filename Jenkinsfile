@@ -112,11 +112,11 @@ pipeline {
                 script {
                     sh '''
                         echo "=== Waiting for deployments to be ready ==="
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=300s deployment/backend
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=300s deployment/frontend
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=300s deployment/elasticsearch
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=300s deployment/logstash
-                        kubectl -n medical-chatbot wait --for=condition=available --timeout=300s deployment/kibana
+                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/backend
+                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/frontend
+                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/elasticsearch
+                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/logstash
+                        kubectl -n medical-chatbot wait --for=condition=available --timeout=600s deployment/kibana
                         
                         echo "=== Checking Pods Status ==="
                         kubectl -n medical-chatbot get pods -o wide
