@@ -100,6 +100,8 @@ pipeline {
                 sh '''
                     echo "=== Starting Ansible Deployment ==="
                     cd ansible
+                    export MINIKUBE_HOME=/var/lib/jenkins/.minikube
+                    export KUBECONFIG=/var/lib/jenkins/.kube/config
                     ansible-playbook -i inventory/hosts.yml playbooks/deploy.yml -e kubeconfig_path=$KUBECONFIG
                 '''
             }
