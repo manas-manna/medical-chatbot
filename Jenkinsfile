@@ -170,7 +170,6 @@ pipeline {
                 sh '''
                     sleep 15
                     echo "=== Setting up persistent port forwarding ==="
-                    chmod +x port-forward.sh
                     ./port-forward.sh
                     
                     echo "=== Port forwarding started ==="
