@@ -126,7 +126,7 @@ spec:
       containers:
       - name: backend
         image: manasmann/medical-chatbot-backend:latest
-        imagePullPolicy: IfNotPresent  # Added for Minikube
+        imagePullPolicy: Never  # Added for Minikube
         ports:
         - containerPort: 8000
         env:
@@ -147,11 +147,11 @@ spec:
               key: SECRET_KEY
         resources:
           requests:
-            cpu: 200m
-            memory: 2Gi
-          limits:
             cpu: 1000m
-            memory: 8Gi
+            memory: 4Gi
+          limits:
+            cpu: 4000m
+            memory: 16Gi
         volumeMounts:
         - name: logs-volume
           mountPath: /app/logs
@@ -193,7 +193,7 @@ spec:
       containers:
       - name: frontend
         image: manasmann/medical-chatbot-frontend:latest
-        imagePullPolicy: IfNotPresent  # Added for Minikube
+        imagePullPolicy: Never  # Added for Minikube
         ports:
         - containerPort: 80
         resources:
