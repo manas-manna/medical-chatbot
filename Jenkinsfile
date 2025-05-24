@@ -5,7 +5,9 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_USER = "${DOCKERHUB_CREDENTIALS_USR}"
         DOCKER_PASS = "${DOCKERHUB_CREDENTIALS_PSW}"
-        KUBECONFIG = credentials('kubeconfig')
+        MINIKUBE_HOME = '/var/lib/jenkins/.minikube'
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+        // KUBECONFIG = credentials('kubeconfig')
     }
     
     stages {
@@ -51,7 +53,7 @@ pipeline {
                         dir('backend') {
                             sh '''
                                 echo "Building Backend Image..."
-                                docker build -t $DOCKER_USER/medical-chatbot-backend:latest
+                                docker build -t $DOCKER_USER/medical-chatbot-backend:latest .
                                 
                                 echo "Pushing Backend Images..."
                                 docker push $DOCKER_USER/medical-chatbot-backend:latest
@@ -67,7 +69,7 @@ pipeline {
                         dir('frontend') {
                             sh '''
                                 echo "Building Frontend Image..."
-                                docker build -t $DOCKER_USER/medical-chatbot-frontend:latest
+                                docker build -t $DOCKER_USER/medical-chatbot-frontend:latest .
                                 
                                 echo "Pushing Frontend Images..."
                                 docker push $DOCKER_USER/medical-chatbot-frontend:latest
@@ -98,7 +100,7 @@ pipeline {
                 sh '''
                     echo "=== Starting Ansible Deployment ==="
                     cd ansible
-                    ansible-playbook -i inventory/hosts.yml playbooks/deploy.yml -v
+                    ansible-playbook -i inventory/hosts.yml playbooks/deploy.yml -e kubeconfig_path=$KUBECONFIG
                 '''
             }
         }
