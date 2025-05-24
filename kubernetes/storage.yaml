@@ -12,6 +12,9 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/data/elasticsearch"
+  claimRef:
+    namespace: medical-chatbot
+    name: elasticsearch-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -40,6 +43,9 @@ spec:
     - ReadWriteMany
   hostPath:
     path: "/mnt/data/logs"
+  claimRef:
+    namespace: medical-chatbot
+    name: logs-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

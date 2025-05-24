@@ -114,7 +114,7 @@ metadata:
   name: backend
   namespace: medical-chatbot
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -125,8 +125,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: local/backend:latest  # Changed for Minikube
-        imagePullPolicy: Never  # Added for Minikube
+        image: manasmann/medical-chatbot-backend:latest
+        imagePullPolicy: IfNotPresent  # Added for Minikube
         ports:
         - containerPort: 8000
         env:
@@ -148,10 +148,10 @@ spec:
         resources:
           requests:
             cpu: 200m
-            memory: 512Mi
+            memory: 2Gi
           limits:
             cpu: 1000m
-            memory: 2Gi
+            memory: 8Gi
         volumeMounts:
         - name: logs-volume
           mountPath: /app/logs
@@ -192,8 +192,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: local/frontend:latest  # Changed for Minikube
-        imagePullPolicy: Never  # Added for Minikube
+        image: manasmann/medical-chatbot-frontend:latest
+        imagePullPolicy: IfNotPresent  # Added for Minikube
         ports:
         - containerPort: 80
         resources:

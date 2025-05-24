@@ -40,8 +40,7 @@ spec:
   ports:
   - port: 5601
     targetPort: 5601
-    nodePort: 30601  # Added for Minikube access
-  type: NodePort  # Changed for easier access in Minikube
+  type: ClusterIP  # Changed for easier access in Minikube
 ---
 # Application Services
 apiVersion: v1
@@ -55,8 +54,7 @@ spec:
   ports:
   - port: 8000
     targetPort: 8000
-    nodePort: 30800  # Added for Minikube access
-  type: NodePort  # Changed for easier access in Minikube
+  type: ClusterIP  # Changed for easier access in Minikube
 ---
 apiVersion: v1
 kind: Service
@@ -69,5 +67,4 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30080  # Added for Minikube access
-  type: NodePort  # Changed for easier access in Minikube
+  type: ClusterIP  # Changed for easier access in Minikube
