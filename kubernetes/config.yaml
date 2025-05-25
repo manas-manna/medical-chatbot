@@ -6,7 +6,7 @@ metadata:
 data:
   MONGODB_URL: "mongodb://host.minikube.internal:27017/medicaldb"
   VAULT_URL: "http://host.minikube.internal:8200"
-  VAULT_TOKEN: "hvs.mMEK4q0QwODq4DDMnSSVFqSD"
+  VAULT_TOKEN: "hvs.NI7tB3V1PTeodrex7PVHd7UE"
 ---
 apiVersion: v1
 kind: ConfigMap

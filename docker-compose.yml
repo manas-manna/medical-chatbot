@@ -11,7 +11,7 @@ services:
       - ./logs:/app/logs
     environment:
       - VAULT_URL=http://host.docker.internal:8200
-      - VAULT_TOKEN=hvs.mMEK4q0QwODq4DDMnSSVFqSD
+      - VAULT_TOKEN=hvs.NI7tB3V1PTeodrex7PVHd7UE
       - MONGODB_URL=mongodb://host.docker.internal:27017/medicaldb
     extra_hosts:
       - "host.docker.internal:host-gateway"
