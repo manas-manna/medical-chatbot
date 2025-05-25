@@ -53,7 +53,7 @@ pipeline {
                         dir('backend') {
                             sh '''
                                 echo "Building Backend Image..."
-                                docker build -t $DOCKER_USER/medical-chatbot-backend:latest .
+                                # docker build -t $DOCKER_USER/medical-chatbot-backend:latest .
                                 
                                 echo "Pushing Backend Images..."
                                 # docker push $DOCKER_USER/medical-chatbot-backend:latest
@@ -69,7 +69,7 @@ pipeline {
                         dir('frontend') {
                             sh '''
                                 echo "Building Frontend Image..."
-                                docker build -t $DOCKER_USER/medical-chatbot-frontend:latest .
+                                # docker build -t $DOCKER_USER/medical-chatbot-frontend:latest .
                                 
                                 echo "Pushing Frontend Images..."
                                 # docker push $DOCKER_USER/medical-chatbot-frontend:latest
