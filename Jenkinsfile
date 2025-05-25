@@ -55,7 +55,7 @@ pipeline {
                                 echo "Building Backend Image..."
                                 docker build -t $DOCKER_USER/medical-chatbot-backend:latest .
                                 
-                                echo "Pushing Backend  Images..."
+                                echo "Pushing Backend Images..."
                                 # docker push $DOCKER_USER/medical-chatbot-backend:latest
                                 
                                 echo "Loading image to Minikube..."
