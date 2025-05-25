@@ -126,7 +126,7 @@ spec:
       containers:
       - name: backend
         image: manasmann/medical-chatbot-backend:latest
-        imagePullPolicy: Never  # Added for Minikube
+        imagePullPolicy: Never  # for Minikube
         ports:
         - containerPort: 8000
         env:
@@ -135,16 +135,16 @@ spec:
             configMapKeyRef:
               name: app-config
               key: MONGODB_URL
-        - name: ACCESS_TOKEN_EXPIRE_MINUTES
+        - name: VAULT_URL
           valueFrom:
             configMapKeyRef:
               name: app-config
-              key: ACCESS_TOKEN_EXPIRE_MINUTES
-        - name: SECRET_KEY
+              key: VAULT_URL
+        - name: VAULT_TOKEN
           valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: SECRET_KEY
+            configMapKeyRef:
+              name: app-config
+              key: VAULT_TOKEN
         resources:
           requests:
             cpu: 1000m

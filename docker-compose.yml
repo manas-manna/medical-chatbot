@@ -8,9 +8,9 @@ services:
     volumes:
       - ./logs:/app/logs
     environment:
-      - SECRET_KEY=EQqexli0J8yG7350ceR9u1_RysjRfpxfPmeBk2UXB0U
+      - VAULT_URL=http://host.docker.internal:8200
+      - VAULT_TOKEN=hvs.mMEK4q0QwODq4DDMnSSVFqSD
       - MONGODB_URL=mongodb://host.docker.internal:27017/medicaldb
-      - ACCESS_TOKEN_EXPIRE_MINUTES=60
     extra_hosts:
       - "host.docker.internal:host-gateway"
   frontend:

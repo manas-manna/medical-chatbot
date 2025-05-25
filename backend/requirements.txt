@@ -29,3 +29,4 @@ aiohttp==3.11.18
 certifi==2025.4.26
 tqdm==4.67.1
 click==7.1.2
+hvac
