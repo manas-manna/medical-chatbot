@@ -59,7 +59,7 @@ pipeline {
                                 # docker push $DOCKER_USER/medical-chatbot-backend:latest
                                 
                                 echo "Loading image to Minikube..."
-                                minikube image load $DOCKER_USER/medical-chatbot-backend:latest
+                                # minikube image load $DOCKER_USER/medical-chatbot-backend:latest
                             '''
                         }
                     }
@@ -75,7 +75,7 @@ pipeline {
                                 # docker push $DOCKER_USER/medical-chatbot-frontend:latest
                                 
                                 echo "Loading image to Minikube..."
-                                minikube image load $DOCKER_USER/medical-chatbot-frontend:latest
+                                # minikube image load $DOCKER_USER/medical-chatbot-frontend:latest
                             '''
                         }
                     }
