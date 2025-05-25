@@ -2,6 +2,8 @@ version: '3.9'
 services:
   backend:
     container_name: backend
+    build:
+      context: ./backend
     image: manasmann/medical-chatbot-backend:latest
     ports:
       - "8000:8000"
@@ -15,6 +17,8 @@ services:
       - "host.docker.internal:host-gateway"
   frontend:
     container_name: frontend
+    build:
+      context: ./frontend
     image: manasmann/medical-chatbot-frontend:latest
     ports:
       - "3000:80"
