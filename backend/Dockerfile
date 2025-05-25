@@ -28,7 +28,7 @@ COPY --from=builder /install /usr/local
 # Copy your application code
 COPY app/ ./app
 COPY ml_models/ ./ml_models
-COPY .scispacy/datasets/ /root/.scispacy/datasets/
+COPY ~/.scispacy/datasets/ /root/.scispacy/datasets/
 COPY requirements.txt .
 
 # Expose FastAPI port
