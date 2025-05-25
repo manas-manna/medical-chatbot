@@ -86,11 +86,8 @@ pipeline {
         stage('Prepare Minikube Environment') {
             steps {
                 sh '''
-                    echo "=== Setting up required directories in Minikube ==="
-                    minikube ssh -- "sudo mkdir -p /mnt/data/logs /mnt/data/elasticsearch && sudo chmod 777 /mnt/data/logs /mnt/data/elasticsearch"
-                    
-                    echo "=== Directory setup completed ==="
-                    minikube ssh -- "ls -la /mnt/data/"
+                    docker exec minikube mkdir -p /mnt/data/logs /mnt/data/elasticsearch
+                    docker exec minikube chmod 777 /mnt/data/logs /mnt/data/elasticsearch
                 '''
             }
         }
