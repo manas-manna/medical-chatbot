@@ -31,7 +31,6 @@ async def log_status_codes(request: Request, call_next):
     # Process the request
     response = await call_next(request)
     
-    # Calculate processing time
     process_time = round((time.time() - start_time) * 1000)
     
     # Extract details
@@ -39,7 +38,7 @@ async def log_status_codes(request: Request, call_next):
     path = request.url.path
     method = request.method
     
-    # Log to file - but only for non-static resources
+    # Log to file
     if not path.startswith("/static/") and not path == "/health":
         log_http_request(method, path, status_code, process_time, request)
     
@@ -53,7 +52,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
+
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(chat_router, prefix="/chat", tags=["Chat"])
 

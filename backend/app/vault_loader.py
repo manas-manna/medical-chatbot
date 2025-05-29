@@ -15,5 +15,5 @@ def load_secrets_from_vault():
             os.environ[k] = v
         return secrets
     except Exception as e:
-        print(f"❌ Vault error: {e}")
+        print(f"Vault error: {e}")
         return {}

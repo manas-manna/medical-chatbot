@@ -20,7 +20,7 @@ export default function Login() {
       const success = await login(username, password);
       if (success) {
         setSuccessMessage(`Welcome, ${username}! Redirecting...`);
-        setTimeout(() => navigate('/'), 3000); 
+        setTimeout(() => navigate('/'), 1500); 
       }
     } catch (err) {
       const message = err.message || 'Login failed';

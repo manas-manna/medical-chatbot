@@ -16,10 +16,8 @@ from pydantic import BaseSettings
 from typing import Literal, Optional
 from app.vault_loader import load_secrets_from_vault
 
-# Attempt to load secrets from Vault
 vault_secrets = load_secrets_from_vault()
 
-# Track where secrets came from
 SECRETS_SOURCE: Literal["vault", "env"] = "vault" if vault_secrets else "env"
 
 class Settings(BaseSettings):
@@ -32,5 +30,5 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# Log where the secrets came from
-print(f"🔍 Config loaded from: {SECRETS_SOURCE.upper()}")
+
+print(f"Config loaded from: {SECRETS_SOURCE.upper()}")

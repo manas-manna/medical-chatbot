@@ -15,4 +15,4 @@
         
     - name: Display deployment completion message
       debug:
-        msg: "✅ Deployment completed successfully! All services are running in {{ namespace }} namespace"
+        msg: "Deployment completed successfully! All services are running in {{ namespace }} namespace"
